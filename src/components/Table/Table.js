@@ -1,7 +1,7 @@
 import React from "react";
 import "./Table.css";
 
-const Table = ({ tableData, handleInputChange }) => {
+const Table = ({ tableData, handleInputChange, handleDelete }) => {
     return (
         <table style={{ borderCollapse: "collapse" }}>
             <thead>
@@ -10,6 +10,7 @@ const Table = ({ tableData, handleInputChange }) => {
                     <th className="yellow-bg">Column Name</th>
                     <th className="green-bg">Distinct Value</th>
                     <th className="orange-bg">User Input</th>
+                    <th className="red-bg">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,9 @@ const Table = ({ tableData, handleInputChange }) => {
                                 value={data.editedColumnName}
                                 onChange={(e) => handleInputChange(index, e)}
                             />
+                        </td>
+                        <td>
+                            <button className="delete-button" onClick={() => handleDelete(index)}>X</button>
                         </td>
                     </tr>
                 ))}

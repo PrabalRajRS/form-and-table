@@ -1,5 +1,14 @@
-
-th, td{
+th,
+td {
     border: 1px solid grey;
     padding: 8px;
+}
+
+.delete-button {
+    background-color: #ec3f3f;
+    color: white;
+    font-weight: 700;
+    border: none;
+    width: 25px;
+    height: 25px;
 }

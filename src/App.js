@@ -48,6 +48,14 @@ function App() {
     });
   };
 
+  const handleDelete = (index) => {
+    setTableData((prevState) => {
+      const newData = [...prevState];
+      newData.splice(index, 1);
+      return newData;
+    });
+  };
+
   return (
     <div className="container">
       {showForm ? (
@@ -60,7 +68,7 @@ function App() {
           setColumnName={setColumnName} />
       ) : (
         <div className="table-container">
-          <Table tableData={tableData} handleInputChange={handleInputChange} />
+          <Table tableData={tableData} handleInputChange={handleInputChange} handleDelete={handleDelete} />
           <div className="table-button-container">
             <button onClick={handleUpdate}>Update</button>
             <button className="green-bg" onClick={() => setShowForm(true)}>Add</button>
