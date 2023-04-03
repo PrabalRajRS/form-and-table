@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Form from "./components/Form/Form";
+import Table from "./components/Table/Table";
+import './App.css';
 
 function App() {
   const [tableData, setTableData] = useState([]);
@@ -18,19 +21,22 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTableData((prevState) => [
-      ...prevState,
-      {
-        tableName,
-        uniqueColumn,
-        columnName,
-        editedColumnName: "",
-      },
-    ]);
-    setShowForm(false);
-    setTableName("");
-    setUniqueColumn("");
-    setColumnName("");
+    if (tableName && uniqueColumn && columnName) {
+      setTableData((prevState) => [
+        ...prevState,
+        {
+          tableName,
+          uniqueColumn,
+          columnName,
+          editedColumnName: "",
+        },
+      ]);
+      setShowForm(false);
+      setTableName("");
+      setUniqueColumn("");
+      setColumnName("");
+    }
+
   };
 
   const handleUpdate = () => {
@@ -43,72 +49,22 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="container">
       {showForm ? (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Table Name:
-            <input
-              type="text"
-              name="tableName"
-              value={tableName}
-              onChange={(e) => setTableName(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Unique Column:
-            <input
-              type="text"
-              name="uniqueColumn"
-              value={uniqueColumn}
-              onChange={(e) => setUniqueColumn(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Column Name:
-            <input
-              type="text"
-              name="columnName"
-              value={columnName}
-              onChange={(e) => setColumnName(e.target.value)}
-            />
-          </label>
-          <br />
-          <button type="submit">Submit</button>
-        </form>
+        <Form handleSubmit={handleSubmit}
+          tableName={tableName}
+          uniqueColumn={uniqueColumn}
+          columnName={columnName}
+          setTableName={setTableName}
+          setUniqueColumn={setUniqueColumn}
+          setColumnName={setColumnName} />
       ) : (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Table Name</th>
-                <th>Unique Column</th>
-                <th>Column Name</th>
-                <th>Edited Column Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tableData.map((data, index) => (
-                <tr key={index}>
-                  <td>{data.tableName}</td>
-                  <td>{data.uniqueColumn}</td>
-                  <td>{data.columnName}</td>
-                  <td>
-                    <input
-                      type="text"
-                      name="editedColumnName"
-                      value={data.editedColumnName}
-                      onChange={(e) => handleInputChange(index, e)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button onClick={handleUpdate}>Update</button>
-          <button onClick={() => setShowForm(true)}>Add</button>
+        <div className="table-container">
+          <Table tableData={tableData} handleInputChange={handleInputChange} />
+          <div className="table-button-container">
+            <button onClick={handleUpdate}>Update</button>
+            <button className="green-bg" onClick={() => setShowForm(true)}>Add</button>
+          </div>
         </div>
       )}
     </div>
